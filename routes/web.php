@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ExampleController;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -96,4 +98,47 @@ Route::get('support/{page?}',function($page='support'){
 // });
 
 
-  
+//   Route::fallback(function(){
+    
+//     return redirect('/') ;
+
+//   });
+
+
+// Route::get('cv', function () {
+
+//     return view ('cv') ;
+//    });
+
+
+//    Route::get('login', function () {
+
+//     return view ('login') ;
+//    });
+   
+//    Route::post('receive', function () {
+
+//     return'Your Data received';
+//    })->name('receive');
+
+//    Route::get('test1',[ExampleController::class,'test1']);
+
+
+
+//task 3
+
+Route::get('car', function () {
+
+return view ('car') ;
+});
+
+Route::post('success', function (Request $request) {
+    $title = request()->get('title');
+    $price = request()->get('price');
+    $desc = request()->get('desc');
+    $publiched = request()->get('remember');
+    $message = ' <p> Title is: ' . $title . '</br>'.'Price is:' . $price .'</br>'. 'Description is :' . $desc .'</br>'. 'remember :'. $publiched ;
+    
+    return   $message . '</p>' ;
+
+})->name('success');
