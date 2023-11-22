@@ -1,0 +1,7 @@
+Task Create Section for the news
+1-	Schema                                      ✅
+2-	Migrate                                     ✅
+3-	Model                                       ✅
+4-	Controller
+5-	Add news form
+6-	Fields (title, content, published, author)

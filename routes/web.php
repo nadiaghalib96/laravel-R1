@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExampleController;
+use App\Http\Controllers\NewsController;
 use Illuminate\Http\Request;
 
 /*
@@ -142,3 +143,9 @@ Route::post('success', function (Request $request) {
     return   $message . '</p>' ;
 
 })->name('success');
+
+Route::get('news' , [NewsController::class,'index']);
+
+Route::get('news/create' , [NewsController::class,'create'])->name('news.create');
+// Route::get('news/{id}/edit' , [NewsController::class,'edit'])->name('news.create');
+Route::post('news' , [NewsController::class,'store'])->name('news.store');
