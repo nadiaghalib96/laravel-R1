@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\NewsController;
 use Illuminate\Http\Request;
+use PhpParser\Node\Stmt\Return_;
 
 /*
 |--------------------------------------------------------------------------
@@ -130,7 +131,7 @@ Route::get('support/{page?}',function($page='support'){
 
 Route::get('car', function () {
 
-return view ('car') ;
+return view('car')->name('car.success');
 });
 
 Route::post('success', function (Request $request) {
@@ -147,5 +148,9 @@ Route::post('success', function (Request $request) {
 Route::get('news' , [NewsController::class,'index']);
 
 Route::get('news/create' , [NewsController::class,'create'])->name('news.create');
-// Route::get('news/{id}/edit' , [NewsController::class,'edit'])->name('news.create');
+Route::get('editNews/{id}' , [NewsController::class,'edit'])->name('editNews');
+// Route::get('news/{id}/edit' , function($id){
+//     return  view('news_edit');
+// })->name('news.edit');
+Route::put('updateNews/{id}' , [NewsController::class,'update'])->name('updateNews');
 Route::post('news' , [NewsController::class,'store'])->name('news.store');

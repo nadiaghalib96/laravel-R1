@@ -26,11 +26,23 @@ class NewsController extends Controller
     }
     
     function index() {
-        return view('news_index');
+        $news = News::get();
+        return view('news_index' , compact('news'));
     }
     
-    // function edit($id) {
-    //     $news  = News::findOrFail($id);
-    //     dd($news);
-    // }
+    function update(string $id,Request $request) {
+
+
+    }
+    
+    function edit(string $id) {
+        $news  = News::findOrFail($id);
+        return view('news_edit',compact('news'));
+        
+        // return view('news_edit',[
+        //     'news'=>$news,
+        // ]);
+
+        // return 'car id is' . $id ;
+    }
 }
