@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CarController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\NewsController;
@@ -149,8 +150,27 @@ Route::get('news' , [NewsController::class,'index']);
 
 Route::get('news/create' , [NewsController::class,'create'])->name('news.create');
 Route::get('editNews/{id}' , [NewsController::class,'edit'])->name('editNews');
+Route::get('newsDetail/{id}' , [NewsController::class,'show'])->name('newsDetail');
+Route::get('deleteNews/{id}' , [NewsController::class,'destory'])->name('deleteNews');
+
 // Route::get('news/{id}/edit' , function($id){
 //     return  view('news_edit');
 // })->name('news.edit');
 Route::put('updateNews/{id}' , [NewsController::class,'update'])->name('updateNews');
 Route::post('news' , [NewsController::class,'store'])->name('news.store');
+
+
+// car modual
+Route::post('storeCar',[CarController::class, 'store'])->name('storeCar');
+
+Route::get('addCar',[CarController::class, 'create']);
+
+Route::get('cars', [CarController::class, 'index']);
+
+Route::get('editCar/{id}', [CarController::class, 'edit']);
+
+Route::get('deleteCar/{id}', [CarController::class, 'destroy']);
+
+Route::get('carDetails/{id}', [CarController::class, 'show'])->name('carDetails');
+
+Route::put('updateCar/{id}', [CarController::class, 'update'])->name('updateCar');

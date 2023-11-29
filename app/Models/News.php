@@ -8,18 +8,48 @@ use Illuminate\Database\Eloquent\Model;
 class News extends Model
 {
     use HasFactory;
-    
-    protected $table= 'news';
+    protected $fillable =[
+            'title',
+            'author',
+            'content',
+            'published'
+    ];
 
-    protected $guarded = [];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     protected $attributes = [
         'published' => false,
     ];
 
+
+
+
+    
+
+
+
+
     protected $casts = [
         'published' => 'boolean',
     ];
+
+    
 
 
     public function isPublished():bool{

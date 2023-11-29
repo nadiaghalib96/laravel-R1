@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>News table</title>
+  <title>Car List</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -9,18 +9,14 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
+
 <div class="container">
-  <h2>News List</h2>
-  @if(session('success'))
-    <div>
-        {{  session('success') }}
-    </div> 
-  @endif
+  <h2>List</h2>
+  <p>The .table-hover class enables a hover state on table rows:</p>            
   <table class="table table-hover">
     <thead>
       <tr>
         <th>Title</th>
-        <th>Author</th>
         <th>Content</th>
         <th>Published</th>
         <th>Edit</th>
@@ -29,18 +25,22 @@
       </tr>
     </thead>
     <tbody>
-    @foreach($news as $new)
+@foreach($cars as $car)        
       <tr>
-        <td>{{ $new->title }}</td>
-        <td>{{ $new->author }}</td>
-        <td>{{ $new->content }}</td>
-        <td>{{ $new->published ? 'YES✅' : 'NO❌' }}</td>
-         <td><a href="/editNews/{{ $new->id }}">Edit</a></td>
-             <td><a href="/newsDetail/{{ $new->id }}">Show</a></td>
-             <td><a href="/deleteNews/{{ $new->id }}">Delete</a></td>
-
+        <td>{{ $car->carTitle }}</td>
+        <td>{{ $car->description }}</td>
+        <td>
+            @if($car->published)
+                Yes
+            @else
+                No
+            @endif
+        </td>
+        <td><a href="editCar/{{ $car->id }}">Edit</a></td>
+        <td><a href="carDetails/{{ $car->id }}">Show</a></td>
+        <td><a href="deleteCar/{{ $car->id }}">Delete</a></td>
       </tr>
-      @endforeach
+@endforeach     
     </tbody>
   </table>
 </div>
