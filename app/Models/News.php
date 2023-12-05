@@ -3,54 +3,28 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
 class News extends Model
 {
-    use HasFactory;
+    use HasFactory , SoftDeletes;
+    
     protected $fillable =[
-            'title',
-            'author',
-            'content',
-            'published'
+        'title',
+        'author',
+        'content',
+        'published',
+        'image',
     ];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     protected $attributes = [
         'published' => false,
     ];
 
-
-
-
-    
-
-
-
-
     protected $casts = [
         'published' => 'boolean',
     ];
-
-    
-
 
     public function isPublished():bool{
         return $this->published === true;

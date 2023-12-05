@@ -151,19 +151,21 @@ Route::get('news' , [NewsController::class,'index']);
 Route::get('news/create' , [NewsController::class,'create'])->name('news.create');
 Route::get('editNews/{id}' , [NewsController::class,'edit'])->name('editNews');
 Route::get('newsDetail/{id}' , [NewsController::class,'show'])->name('newsDetail');
-Route::get('deleteNews/{id}' , [NewsController::class,'destory'])->name('deleteNews');
-
-// Route::get('news/{id}/edit' , function($id){
-//     return  view('news_edit');
-// })->name('news.edit');
 Route::put('updateNews/{id}' , [NewsController::class,'update'])->name('updateNews');
 Route::post('news' , [NewsController::class,'store'])->name('news.store');
-
+Route::get('trashedNews',[NewsController::class, 'trashed']);
+Route::get('restoreNews/{id}',[NewsController::class, 'restore']);
+Route::get('destoryNews/{id}' , [NewsController::class,'destory'])->name('destoryNews');
+Route::get('deleteNews/{id}',[NewsController::class, 'delete'])->name('deleteNews');
 
 // car modual
 Route::post('storeCar',[CarController::class, 'store'])->name('storeCar');
 
 Route::get('addCar',[CarController::class, 'create']);
+Route::get('trashed',[CarController::class, 'trashed']);
+Route::get('restoreCar/{id}',[CarController::class, 'restore']);
+Route::get('delete/{id}',[CarController::class, 'delete']);
+
 
 Route::get('cars', [CarController::class, 'index']);
 
@@ -174,3 +176,19 @@ Route::get('deleteCar/{id}', [CarController::class, 'destroy']);
 Route::get('carDetails/{id}', [CarController::class, 'show'])->name('carDetails');
 
 Route::put('updateCar/{id}', [CarController::class, 'update'])->name('updateCar');
+
+Route::get('showUpload',[ExampleController::class, 'showUpload']);
+
+Route::post('upload',[ExampleController::class, 'upload'])->name('upload');
+
+
+// Route::resource('news',NewsController::class);
+/* 
+    news          -> index      -> get
+    news/create   -> create     -> get 
+    news          -> store      -> post
+    news/{id}     -> show       -> get
+    news/{id}/edit-> edit       -> get
+    news/{id}     -> update     -> PUT|PATCH 
+    news/{id}     -> destroy    -> DELETE 
+*/
