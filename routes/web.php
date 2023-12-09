@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\CarController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExampleController;
@@ -43,8 +44,8 @@ Route::get('support/{page?}',function($page='support'){
 
 
 
-   
-   
+
+
 // Route::get('/user/{name}/{age?}', function ($name , $age=0) {
 
 //    $message = ' <h1> The user name is: ' . $name ;
@@ -55,10 +56,10 @@ Route::get('support/{page?}',function($page='support'){
 //      //regularex
 //    })->whereIn('name',['nada','Nadia']);
 
-    //->where (['age' => '[0-9]+' , 'name'=>'[a-zA-Z0-9]+']); 
+    //->where (['age' => '[0-9]+' , 'name'=>'[a-zA-Z0-9]+']);
    //->whereAlpha('name');
    //->whereNumber('age');
-  
+
 
 
 
@@ -70,11 +71,11 @@ Route::get('support/{page?}',function($page='support'){
 //     Route::get('chat', function(){
 //         return 'chat page';
 //     });
-    
+
 //     Route::get('call', function(){
 //         return 'call page';
 //     });
-    
+
 //     Route::get('ticket', function(){
 //         return 'ticket page';
 //     });
@@ -102,7 +103,7 @@ Route::get('support/{page?}',function($page='support'){
 
 
 //   Route::fallback(function(){
-    
+
 //     return redirect('/') ;
 
 //   });
@@ -118,7 +119,7 @@ Route::get('support/{page?}',function($page='support'){
 
 //     return view ('login') ;
 //    });
-   
+
 //    Route::post('receive', function () {
 
 //     return'Your Data received';
@@ -141,7 +142,7 @@ Route::post('success', function (Request $request) {
     $desc = request()->get('desc');
     $publiched = request()->get('remember');
     $message = ' <p> Title is: ' . $title . '</br>'.'Price is:' . $price .'</br>'. 'Description is :' . $desc .'</br>'. 'remember :'. $publiched ;
-    
+
     return   $message . '</p>' ;
 
 })->name('success');
@@ -182,13 +183,23 @@ Route::get('showUpload',[ExampleController::class, 'showUpload']);
 Route::post('upload',[ExampleController::class, 'upload'])->name('upload');
 
 
+
+Route::get('home',[PlaceController::class, 'index']);
+Route::get('login',[ExampleController::class, 'login']);
+Route::get('place',[ExampleController::class, 'place']);
+Route::get('blog',[ExampleController::class, 'blog']);
+Route::post('storeplace',[PlaceController::class, 'store'])->name('storeplace');
+Route::get('addplace',[PlaceController::class, 'create']);
+Route::get('blog1',[ExampleController::class, 'blog1']);
+
+
 // Route::resource('news',NewsController::class);
-/* 
+/*
     news          -> index      -> get
-    news/create   -> create     -> get 
+    news/create   -> create     -> get
     news          -> store      -> post
     news/{id}     -> show       -> get
     news/{id}/edit-> edit       -> get
-    news/{id}     -> update     -> PUT|PATCH 
-    news/{id}     -> destroy    -> DELETE 
+    news/{id}     -> update     -> PUT|PATCH
+    news/{id}     -> destroy    -> DELETE
 */
