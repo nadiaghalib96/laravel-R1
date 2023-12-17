@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use App\Models\Car;
-use Symfony\Contracts\Service\Attribute\Required;
-use App\Traits\Common; 
+use App\Models\Category;
+use App\Traits\Common;
 
 
 class CarController extends Controller
@@ -28,7 +28,8 @@ class CarController extends Controller
      */
     public function create()
     {
-        return view('addCar');
+        $categories = Category::select('id', 'categoryName')->get();
+        return view('addCar', compact('categories'));
     }
 
     /**
@@ -36,21 +37,8 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
+        $data = $this->validated($request);
 
-        $messages=[
-            'carTitle.required'=>'Title is required',
-            'description.required'=> 'should be text',
-        ];
-
-        $data = $request->validate([
-            'carTitle'=>'required|string',
-            'description'=>'required|string',
-            'image' => 'required|mimes:png,jpg,jpeg|max:2048',
-        ], $messages);
-
-        $fileName = $this->uploadFile($request->image, 'uploads');
-        $data['image']= $fileName;
-        $data['published'] = isset($request['published']);
         Car::create($data);
 
         return 'done';
@@ -58,13 +46,13 @@ class CarController extends Controller
 
 
 
-      
+
         // $cars = new Car;
         // $cars->carTitle = $request->title;
         // $cars->description = $request->description;
 
 
-     
+
 
         // if(isset($request->published)){
         //     $cars->published = true;
@@ -73,7 +61,7 @@ class CarController extends Controller
         // }
         // $cars->save();
 
-       
+
         // Car::create($data);
         // return redirect('cars');
 
@@ -95,15 +83,11 @@ class CarController extends Controller
     public function edit(string $id)
     {
         $car = Car::findOrFail($id);
-        return view('updateCar',compact('car'));
+        $categories = Category::select('id', 'categoryName')->get();
+        return view('updateCar',compact('car','categories'  ));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        $cars  = Car::findOrFail($id);
+    public function validated(Request $request,$old_image = null) {
 
         $messages=[
             'carTitle.required'=>'Title is required',
@@ -113,16 +97,29 @@ class CarController extends Controller
         $data = $request->validate([
             'carTitle'=>'required|string',
             'description'=>'required|string',
+            'shortDescription'=>'required|string',
+            'category_id'=>'required|numeric|exists:categories,id',
             'image' => 'sometimes|nullable|file|mimes:png,jpg,jpeg|max:2048',
         ], $messages);
 
         $data['published'] = isset($request['published']);
         if($request->hasFile('image')){
             $data['image']= $this->uploadFile($request->image, 'uploads');
-            @unlink(public_path($cars->image));    
-        }        
+            if($old_image){
+                @unlink(public_path($old_image));
+            }
+        }
+        return $data;
+    }
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        $cars  = Car::findOrFail($id);
+        $data = $this->validated($request,$cars->image);
         $cars->update($data);
-        
+
         return 'done ';
 
 
@@ -131,7 +128,7 @@ class CarController extends Controller
 
         // Car::where('id', $id)->update($data);
 
-        
+
     }
 
     /**
@@ -150,11 +147,11 @@ class CarController extends Controller
     }
 
     public function restore(string $id) : RedirectResponse{
-        Car::where('id', $id)->restore();     
+        Car::where('id', $id)->restore();
         return redirect('cars');
     }
     public function delete(string $id) : RedirectResponse{
-        Car::where('id', $id)->forceDelete();     
+        Car::where('id', $id)->forceDelete();
         return redirect('cars');
     }
 }

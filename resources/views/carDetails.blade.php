@@ -13,6 +13,6 @@
     <br>
     Car Description: {{  $car->description }}
     <br>
-    Price: 
+    Category: {{  $car->category->categoryName }}
 </body>
 </html>
