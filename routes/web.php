@@ -5,7 +5,9 @@ use App\Http\Controllers\CarController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\NewsController;
+use App\Mail\ContactMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use PhpParser\Node\Stmt\Return_;
 
 /*
@@ -203,3 +205,21 @@ Route::get('blog1',[ExampleController::class, 'blog1']);
     news/{id}     -> update     -> PUT|PATCH
     news/{id}     -> destroy    -> DELETE
 */
+
+Auth::routes(['verify'=>true]);
+
+Route::get('/home2', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Route::view('/contact','contact');
+Route::post('/contact',function (Request $request) {
+
+    Mail::to('nadiaghalib96@gmail.com')
+    ->send(new ContactMail(
+        $request->get('name'),
+        $request->get('email'),
+        $request->get('subject'),
+        $request->get('message'),
+    ));
+
+});

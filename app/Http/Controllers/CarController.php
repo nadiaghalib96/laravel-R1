@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
 use App\Models\Car;
 use App\Models\Category;
 use App\Traits\Common;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 
 class CarController extends Controller
