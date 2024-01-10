@@ -170,7 +170,7 @@ Route::get('restoreCar/{id}',[CarController::class, 'restore']);
 Route::get('delete/{id}',[CarController::class, 'delete']);
 
 
-Route::get('cars', [CarController::class, 'index']);
+Route::get('cars', [CarController::class, 'index'])->middleware('verified');
 
 Route::get('editCar/{id}', [CarController::class, 'edit']);
 
@@ -183,6 +183,7 @@ Route::put('updateCar/{id}', [CarController::class, 'update'])->name('updateCar'
 Route::get('showUpload',[ExampleController::class, 'showUpload']);
 
 Route::post('upload',[ExampleController::class, 'upload'])->name('upload');
+Route::get('session',[ExampleController::class, 'mySession'])->name('session');
 
 
 
@@ -208,18 +209,25 @@ Route::get('blog1',[ExampleController::class, 'blog1']);
 
 Auth::routes(['verify'=>true]);
 
-Route::get('/home2', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home2', [App\Http\Controllers\HomeController::class, 'index'])->name('home2');
 
 
-Route::view('/contact','contact');
-Route::post('/contact',function (Request $request) {
 
-    Mail::to('nadiaghalib96@gmail.com')
-    ->send(new ContactMail(
-        $request->get('name'),
-        $request->get('email'),
-        $request->get('subject'),
-        $request->get('message'),
-    ));
+    Route::group(
+        [
+            'prefix' => LaravelLocalization::setLocale(),
+            'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+        ], function(){
+            Route::view('/contact','contact');
+            Route::post('/contact',function (Request $request) {
 
-});
+                Mail::to('nadiaghalib96@gmail.com')
+                ->send(new ContactMail(
+                    $request->get('name'),
+                    $request->get('email'),
+                    $request->get('subject'),
+                    $request->get('message'),
+                ));
+
+            });
+        });

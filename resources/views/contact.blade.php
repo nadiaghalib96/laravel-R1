@@ -20,10 +20,14 @@
   <div class="content">
 
     <div class="container">
+        <div>
+    <a href ="{{  LaravelLocalization::getLocalizedURL('en') }}">English</a>
+    <a href ="{{   LaravelLocalization::getLocalizedURL('ar')}}">Araic</a>
+</div>
       <div class="row align-items-stretch justify-content-center no-gutters">
         <div class="col-md-7">
           <div class="form h-100 contact-wrap p-5">
-            <h3 class="text-center">Let's Talk</h3>
+            <h3 class="text-center">{{__('messages.contactForm')}}</h3>
             <form class="mb-5" method="post" id="contactForm" name="contactForm" action="/contact">
                 @csrf
               <div class="row">

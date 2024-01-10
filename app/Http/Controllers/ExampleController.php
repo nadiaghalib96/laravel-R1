@@ -40,4 +40,11 @@ class ExampleController extends Controller
         $news = News::get();
         return view('home',compact('news'));
     }
+
+    public function mySession(){
+       session()->put('test','first session');
+      session()->forget('test');
+     $data = session('test');
+    return view('session',compact('data'));
+    }
 }
